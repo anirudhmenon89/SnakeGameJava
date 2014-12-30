@@ -13,8 +13,11 @@ public class Constants {
 	public static final int RIGHT = 3;
 	public static final int SCALE = 10;
 	public static final int REFRESH_TIME = 20;
+	
+	/* Game states */
 	public static final int GAME_ON = 0;
 	public static final int GAME_OVER = 1;
+	public static final int GAME_PAUSE = 2;
 	
 	/* Change any colours */
 	public static final Color BACKGROUND_COLOUR = new Color(4422679);

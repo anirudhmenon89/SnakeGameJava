@@ -1,4 +1,6 @@
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -43,19 +45,17 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 		initObjects();
 		
-		/* Set frame properties */
+		// Set frame properties
 		mjFrame.setSize(Constants.WIDTH, Constants.HEIGHT);
-		mjFrame.setVisible(true);
-		mjFrame.setResizable(true);
+		mjFrame.setResizable(false);
 		mjFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		/* Set render class to JFrame. This control how the window looks */
 		mjFrame.add(mRenderPanel);
+		mjFrame.setVisible(true);
 		
-		/* Set listener for arrow keys to move the snake */
+		// Set listener for arrow keys to move the snake
 		mjFrame.addKeyListener(this);
 
-		/* Initialize all components for the game */
+		// Initialize all components for the game
 		startGame();
 	}
 
@@ -66,7 +66,6 @@ public class NibblesMain implements ActionListener, KeyListener {
 		mToolkit = Toolkit.getDefaultToolkit();
 
 		mjFrame = new JFrame("Nibbles");
-
 		mRenderPanel = new RenderPanel(this);
 
 		malSnakeParts = new ArrayList<Point>();
@@ -74,7 +73,6 @@ public class NibblesMain implements ActionListener, KeyListener {
 		pCherry = new Point();
 
 		mTimer = new Timer(Constants.REFRESH_TIME, this);
-		
 	}
 
 
@@ -186,7 +184,7 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 			if(miSnakeDirection == Constants.DOWN) {
 				if (pHead.y != (Constants.HEIGHT/Constants.SCALE)) { 
-					// Within wall boundries
+					// Within wall boundaries
 					pHead = new Point(pHead.x, pHead.y + 1);
 				} else { 
 					//Collided with wall
@@ -196,7 +194,7 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 			if(miSnakeDirection == Constants.UP) {
 				if(pHead.y >= 0 ) { 
-					// Within wall boundries
+					// Within wall boundaries
 					pHead = new Point(pHead.x, pHead.y - 1);
 				} else {
 					//Collided with wall
@@ -206,7 +204,7 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 			if(miSnakeDirection == Constants.RIGHT) {
 				if(pHead.x != (Constants.WIDTH / Constants.SCALE)) { 
-					// Within wall boundries
+					// Within wall boundaries
 					pHead = new Point(pHead.x+1,  pHead.y);
 				} else {
 					//Collided with wall
@@ -215,8 +213,8 @@ public class NibblesMain implements ActionListener, KeyListener {
 			}
 
 			if(miSnakeDirection == Constants.LEFT) {
-				if(pHead.x >= 0 ) { 
-					// Within wall boundries
+				if(pHead.x > 0 ) { 
+					// Within wall boundaries
 					pHead = new Point(pHead.x-1,  pHead.y);
 				} else {
 					//Collided with wall
@@ -230,7 +228,7 @@ public class NibblesMain implements ActionListener, KeyListener {
 			
 			// Check if cherry is eaten
 			if(pHead.equals(pCherry)) {
-				miScore++; 				// 1. Increase score
+				miScore++;				// 1. Increase score
 				miSnakeLength++;		// 2. Increase snake size
 				showSnake();			// 3. Repaint snake to show increased size
 				showCherry();			// 4. Show cherry at new position
@@ -277,10 +275,12 @@ public class NibblesMain implements ActionListener, KeyListener {
 				// Pause game
 				mbGamePause = true;
 				mTimer.stop();
+				mRenderPanel.showPanel(Constants.GAME_PAUSE);
 			} else if(mbGamePause && !mbGameOver){ 
 				// Resume Game
 				mbGamePause = false;
 				mTimer.restart();
+				mRenderPanel.showPanel(Constants.GAME_ON);
 			} else if(mbGameOver) {
 				// Restart Game
 				startGame();
