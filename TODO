@@ -1,5 +1,14 @@
 ======================================
+TODO
+======================================
+
+ -  Multi player ability (v 1.1)
+ -  Play with levels (v 1.2)
+
+
+
+======================================
 KNOWN BUGS (v 1.0)
 ======================================
-1. Cherry sometimes shows on a point already occupied by snake
-2. Inconsistencies in game if HEIGHT AND WIDTH of the panel is not equal
+
+ -  Inconsistencies in game if HEIGHT AND WIDTH of the panel is not equal

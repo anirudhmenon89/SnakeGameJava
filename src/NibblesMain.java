@@ -161,8 +161,16 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 		// Generate random number for Y
 		int y = random.nextInt(MAX_Y - MIN) + MIN;
-
-		pCherry = new Point(x, y);
+		
+		Point tempPoint = new Point(x, y);
+		
+		// Check if the cherry is not contained within the snake
+		if(!malSnakeParts.contains(tempPoint)) {
+			pCherry = tempPoint;
+		} else {
+			System.out.println("Cherry generated with in snake");
+			showCherry();
+		}
 	}
 
 
@@ -228,11 +236,15 @@ public class NibblesMain implements ActionListener, KeyListener {
 			
 			// Check if cherry is eaten
 			if(pHead.equals(pCherry)) {
-				miScore++;				// 1. Increase score
-				miSnakeLength++;		// 2. Increase snake size
-				showSnake();			// 3. Repaint snake to show increased size
-				showCherry();			// 4. Show cherry at new position
-				showScore();			// 5. Show increased score
+				miScore++;								// 1. Increase score
+				miSnakeLength++;						// 2. Increase snake size
+				showSnake();							// 3. Repaint snake to show increased size
+				showCherry();							// 4. Show cherry at new position
+				showScore();							// 5. Show increased score
+				
+				if(miScore % 7 == 0 && miSpeed > 0) {	// 6. Make snake faster every 7 points 
+					miSpeed --;
+				}
 			}
 
 		}
