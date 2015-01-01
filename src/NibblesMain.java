@@ -21,9 +21,11 @@ public class NibblesMain implements ActionListener, KeyListener {
 	private int miSnakeDirection;
 	private int miTicks;
 	private int miSpeed;
-
+	private int miGodModeTemp;
+	
 	private boolean mbGameOver; 
 	private boolean mbGamePause;
+	private boolean mbIsGodModeOn;
 
 	public ArrayList<Point> malSnakeParts;
 
@@ -44,14 +46,14 @@ public class NibblesMain implements ActionListener, KeyListener {
 	public NibblesMain() {
 
 		initObjects();
-		
+
 		// Set frame properties
 		mjFrame.setSize(Constants.WIDTH, Constants.HEIGHT);
 		mjFrame.setResizable(false);
 		mjFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mjFrame.add(mRenderPanel);
 		mjFrame.setVisible(true);
-		
+
 		// Set listener for arrow keys to move the snake
 		mjFrame.addKeyListener(this);
 
@@ -89,32 +91,36 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 		mbGameOver = false;
 		mbGamePause = false;
+		mbIsGodModeOn = false;
 
 		showSnake();
 
 		showCherry();
-		
+
 		showScore();
 
 		mTimer.start();
 	}
-	
-	
+
+
 	private void gameOver() {
-		mRenderPanel.showPanel(Constants.GAME_OVER);
-		mbGameOver = true;
-		mTimer.stop();
+		
+		if(!mbIsGodModeOn) {
+			mRenderPanel.showPanel(Constants.GAME_OVER);
+			mbGameOver = true;
+			mTimer.stop();
+		}
 	}
 
 
 	/* Set co-ordinates to show snake */
 	private void showSnake() { 
-		
+
 		// Snake should start from 0,0 in every game
 		if(miScore == 0) {  
 			pHead = new Point(0, 0);
 		}
-		
+
 		if(malSnakeParts.isEmpty()) {
 			// This is a new game, so add to the snake equal to the length
 			for(int i = 0; i < miSnakeLength; i++) {
@@ -125,23 +131,23 @@ public class NibblesMain implements ActionListener, KeyListener {
 			malSnakeParts.add(new Point(pHead.x, pHead.y));
 		}
 	}
-	
-	
+
+
 	/* Checks if snake collides with itself */
 	private boolean didSnakeSelfCollide() {
-		
+
 		if(malSnakeParts.contains(pHead)) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	private void showScore() {
 		mRenderPanel.repaintScore(miScore);
 	}
-	
+
 
 	//TODO: Improve on this
 	/* Show a cherry at random co-ordinates on screen
@@ -161,9 +167,9 @@ public class NibblesMain implements ActionListener, KeyListener {
 
 		// Generate random number for Y
 		int y = random.nextInt(MAX_Y - MIN) + MIN;
-		
+
 		Point tempPoint = new Point(x, y);
-		
+
 		// Check if the cherry is not contained within the snake
 		if(!malSnakeParts.contains(tempPoint)) {
 			pCherry = tempPoint;
@@ -233,7 +239,7 @@ public class NibblesMain implements ActionListener, KeyListener {
 			if(didSnakeSelfCollide()) {
 				gameOver();
 			}
-			
+
 			// Check if cherry is eaten
 			if(pHead.equals(pCherry)) {
 				miScore++;								// 1. Increase score
@@ -241,8 +247,8 @@ public class NibblesMain implements ActionListener, KeyListener {
 				showSnake();							// 3. Repaint snake to show increased size
 				showCherry();							// 4. Show cherry at new position
 				showScore();							// 5. Show increased score
-				
-				if(miScore % 7 == 0 && miSpeed > 0) {	// 6. Make snake faster every 7 points 
+
+				if(miScore % 7 == 0 && miSpeed != 1) {	// 6. Make snake faster every 7 points 
 					miSpeed --;
 				}
 			}
@@ -280,7 +286,7 @@ public class NibblesMain implements ActionListener, KeyListener {
 		if(i == KeyEvent.VK_LEFT && miSnakeDirection != Constants.RIGHT) {
 			miSnakeDirection = Constants.LEFT;
 		}
-		
+
 		// Pause / Resume / Restart Game
 		if(i == KeyEvent.VK_SPACE) {
 			if(!mbGamePause && !mbGameOver) {
@@ -296,6 +302,73 @@ public class NibblesMain implements ActionListener, KeyListener {
 			} else if(mbGameOver) {
 				// Restart Game
 				startGame();
+			}
+		}
+		
+		
+		// God mode check
+		if(i == KeyEvent.VK_S) {
+			if(miGodModeTemp == 0 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_H) {
+			if(miGodModeTemp == 1 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_O) {
+			if(miGodModeTemp == 2 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_W) {
+			if(miGodModeTemp == 3 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_M) {
+			if(miGodModeTemp == 4 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_E) {
+			if(miGodModeTemp == 5 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_G) {
+			if(miGodModeTemp == 6 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_O) {
+			if(miGodModeTemp == 7 && !mbGameOver && !mbGamePause) {
+				miGodModeTemp ++;
+			} else {
+				miGodModeTemp = 0;
+			}
+		}
+		if(i == KeyEvent.VK_D) {
+			if(miGodModeTemp == 8 && !mbGameOver && !mbGamePause) {
+				mbIsGodModeOn = true;
+				System.out.print("God Mode");
+			} else {
+				miGodModeTemp = 0;
 			}
 		}
 
